@@ -1,0 +1,20 @@
+name: Build and Deploy
+on: [push]
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: download changes and build
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+          script: |
+            cd /var/www/inscriptions/vue-kadosh/
+            git pull
+            npm install
+            rm -rf dist
+            npm run build
