@@ -15,6 +15,7 @@ jobs:
           script: |
             cd /var/www/inscriptions/vue-kadosh/
             git pull
+            export NVM_DIR=~/.nvm && source ~/.nvm/nvm.sh
             npm install
             rm -rf dist
             npm run build
