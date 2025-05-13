@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { Api } from "@/api/connection.ts";
 import { useMembersStore } from "@/stores/storeMembers.ts";
+import type { InterfaceActivities, PaymentMethod } from "@/stores/interfaceActivities.ts";
 
 export const storeChurches = defineStore("storeChurches", {
     state: () => ({
@@ -32,7 +33,7 @@ export const storeDocumentType = defineStore("storeDocumentType", {
 
 export const storePaymentMethod = defineStore("storePaymentMethod", {
     state: () => ({
-        paymentMethod: [] as { id: null | number, description: string, icon: string, account: string, active: boolean }[]
+        paymentMethod: [] as PaymentMethod[]
     }),
     actions: {
         async getPaymentMethod() {
@@ -46,10 +47,7 @@ export const storePaymentMethod = defineStore("storePaymentMethod", {
 
 export const storeActivities = defineStore("storeActivities", {
     state: () => ({
-        activities: [] as {
-            id: number, created: string, modified: string, title: string, description: string,
-            location: string, start_date: string, end_date: string, is_active: boolean
-        }[]
+        activities: [] as InterfaceActivities[]
     }),
     actions: {
         async getActivities() {

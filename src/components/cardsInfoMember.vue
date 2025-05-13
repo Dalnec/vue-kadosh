@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { InterfaceMembers } from "@/composable/interfaceMembers";
 import { useMembersStore } from "@/stores/storeMembers.ts";
-import { format, isValid, parseISO } from "date-fns";
 import { storeChurches, storeKind } from "../stores/generalInfoStore.ts";
 
 const membersStoreOptions = useMembersStore();
@@ -11,22 +10,22 @@ const props = withDefaults(defineProps<InterfaceMembers>(), {
     names: "",
     lastnames: "",
     gender: "",
-    birthdate: '',
+    birthdate: "",
     phone: "",
     kind: null,
     church: null,
     docType: null
 });
 
-const convertDate = (data: string | Date | Date[] | (Date | null)[] | null) => {
-    if ( !data) return { birthdate: null };
-
-    const rawDate = Array.isArray(data) ? data[0] : data;
-    if ( !rawDate) return { birthdate: null };
-
-    const date = typeof rawDate === "string" ? parseISO(rawDate) : rawDate;
-    return isValid(date) ? format(date as Date, "dd-MM-yyyy") : null;
-};
+// const convertDate = (data: string | Date | Date[] | (Date | null)[] | null) => {
+//     if ( !data) return { birthdate: null };
+//
+//     const rawDate = Array.isArray(data) ?data[0] : data;
+//     if ( !rawDate) return { birthdate: null };
+//
+//     const date = typeof rawDate === "string" ?parseISO(rawDate) : rawDate;
+//     return isValid(date) ?format(date as Date, "dd-MM-yyyy") : null;
+// };
 
 </script>
 
@@ -57,7 +56,7 @@ const convertDate = (data: string | Date | Date[] | (Date | null)[] | null) => {
             </div>
             <div class="flex items-center gap-1 text-gray-500 dark:text-gray-300">
                 <i-material-symbols-calendar-month-outline-rounded class="text-base"/>
-                <span>{{ convertDate(props.birthdate) }}</span>
+                <span>Edad: {{ props.age }}</span>
             </div>
         </div>
 

@@ -41,7 +41,7 @@ const images = ref([
     <Galleria :value="images" :numVisible="5" :showThumbnails="false" :showIndicators="false" :responsiveOptions auto-play circular
               :transition-interval="5000">
         <template #item="{item}">
-            <img :src="item?.itemImageSrc" :alt="item?.alt" class="w-full h-[900px] object-cover md:object-contain"/>
+            <img :src="item?.itemImageSrc" :alt="item?.alt" class="w-full h-[600px] object-cover md:object-contain"/>
         </template>
     </Galleria>
 </template>

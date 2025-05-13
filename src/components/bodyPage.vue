@@ -15,14 +15,7 @@ import HeadContent from "@/components/headContent.vue";
 <template>
     <main class="-mt-20">
         <div>
-            <!--            <event-time/>-->
             <head-content/>
-            <!--            <content-page gradient-mode="to top right" color-via="var(&#45;&#45;p-primary-100)" color-from="var(&#45;&#45;p-primary-400)"-->
-            <!--                          color-to="var(&#45;&#45;p-primary-700)" :opacity="0.25" :url-image="portTarapoto">-->
-            <!--                <template #bottom-description>-->
-            <!--                    <event-time class="hidden md:flex"/>-->
-            <!--                </template>-->
-            <!--            </content-page>-->
         </div>
         <event-time/>
         <div class="flex w-full items-center justify-center py-10 font-extrabold bg-slate-950 text-2xl md:text-5xl">

@@ -36,7 +36,7 @@ defineExpose({ visibleDrawer });
         <div class="grid space-y-2">
             <cards-info-member v-for="data in  membersStoreOptions.membersData" :key="data.doc_num" :birthdate="data.birthdate"
                                :doc_num="data.doc_num" :church="data.church" :doc-type="data.documenttype" :gender="data.gender"
-                               :kind="data.kind" :names="data.names" :lastnames="data.lastnames" :phone="data.phone"
+                               :kind="data.kind" :names="data.names" :lastnames="data.lastnames" :phone="data.phone" :age="data.age"
                                @click="$emit('onClickCard', (data))" :status="data.status"/>
         </div>
         <template #footer>

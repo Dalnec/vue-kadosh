@@ -22,10 +22,10 @@ import happyYoung from "@/assets/images/imgYoungs.jpg";
                         ¿Dónde?
                     </div>
                     <span class="block text-center text-2xl">
-                        El congreso se realizará en Perú, en la ciudad de Tarapoto, conocida también como la “Ciudad de las palmeras” 
-                        por su clima tropical, sus destinos históricos y turísticos maravillosos. <br/><br/>
+                        El congreso se realizará en Perú, en la ciudad de Lamas, conocida también como la “Capital Folclórica de la Amazonía 
+                        Peruana” por su clima tropical, sus destinos históricos y turísticos maravillosos. <br/><br/>
                         Estaremos viviendo toda esta experiencia de <span class="text-primary-500">Kadosh</span> 
-                        en la “I.E Martin de la Riva y Herrera”. <br/> Jirón San Martín 2193 - Barrio Ancoallo, Tarapoto 220904, Perú.
+                        en la “I.E Martin de la Riva y Herrera”. <br/> Jirón San Martín 2193 - Barrio Ancoallo, Lamas 220501, Perú.
                     </span>
                 </div>
             </div>

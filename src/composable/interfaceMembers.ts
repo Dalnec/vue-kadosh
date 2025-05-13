@@ -9,6 +9,7 @@ export interface InterfaceMembers {
     kind: number | null;
     lastnames: string;
     names: string;
+    age: number | null;
     phone: string;
     id?: number;
     status: boolean;

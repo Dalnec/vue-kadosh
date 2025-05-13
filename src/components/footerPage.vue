@@ -29,9 +29,8 @@ const menuItems = [
             <div>
                 <h3 class="mb-4 font-bold uppercase">JNI</h3>
                 <ul class="space-y-2">
-                    <li><a href="#" class="hover:underline">Instagram</a></li>
+                    <li><a href="https://www.instagram.com/jni.dpno/" target="_blank" class="hover:underline">Instagram</a></li>
                     <li><a href="#" class="hover:underline">NYI</a></li>
-                    <li><a href="#" class="hover:underline">SAMNAZ</a></li>
                 </ul>
             </div>
             <div>
@@ -56,16 +55,19 @@ const menuItems = [
                 <h3 class="mb-4 font-bold uppercase">Contacto</h3>
                 <p class="mb-4 flex items-start gap-2">
                     <i class="text-xl text-white pi pi-map-marker"></i>
-                    <span>Jirón San Martín 2193 - Barrio Ancoallo, Tarapoto 220904, Perú.</span>
+                    <span>Jirón San Martín 2193 - Barrio Ancoallo, Lamas 220501, Perú.</span>
                 </p>
             </div>
         </div>
         <div class="flex flex-col items-center justify-between border-t border-gray-700 pt-6 text-xs md:flex-row">
             <p class="flex items-center gap-1">
-                Powered by <span class="text-indigo-500"><a href="https://github.com/DanGosw?tab=repositories" target="_blank" class="flex items-center gap-x-2 hover:underline">DevRunner <i-mdi-github/> </a></span>
+                Powered by <span class="text-indigo-500">
+                <a href="https://github.com/DanGosw?tab=repositories" target="_blank" class="flex items-center gap-x-2 hover:underline">
+                    DevRunner <i-mdi-github/> 
+                </a>
+            </span>
             </p>
             <p>© 2025 JNI SAM. Todos los derechos reservados</p>
         </div>
-
     </footer>
 </template>

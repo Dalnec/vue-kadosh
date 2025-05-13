@@ -14,7 +14,7 @@
         </div>
         <div class="flex items-center px-2 rounded-e-xl">
             <i-material-symbols-file-map class="text-lg sm:text-xl"/>
-            <span class="mx-2 text-base md:text-xl">Tarapoto – Lamas</span>
+            <span class="mx-2 text-base md:text-xl">Lamas</span>
         </div>
     </div>
 </template>

@@ -38,7 +38,7 @@
 }
 
 .p-button-lg {
-    @apply text-[1.125rem] px-[0.875rem] py-[0.625rem]
+    @apply text-[1.125rem] leading-normal h-[2.875rem] w-[2.625rem]
 }
 
 .p-button-lg .p-button-icon {

@@ -14,6 +14,7 @@ import { format, isDate, parseISO } from "date-fns";
 import { storeActivities, storePaymentMethod, storePriceRate, storeRate } from "@/stores/generalInfoStore.ts";
 import ViewPaymentMethods from "@/components/viewPaymentMethods.vue";
 import router from "@/router/routes.ts";
+import type { PaymentMethod } from "@/stores/interfaceActivities.ts";
 
 type VoucherImageType = { file: File; objectURL: string; };
 
@@ -23,7 +24,7 @@ const updateVisibilityDrawer = () => refDrawerMembersSaved.value.visibleDrawer =
 const storeDataMembers = useMembersStore();
 const fileAccept = ref<string>("image/png, image/jpeg, image/jpg");
 const refVoucherImage = ref();
-const dataForViewPayment = ref({ description: "", icon: "", account: "", active: true });
+const dataForViewPayment = ref<PaymentMethod>({ account: "", active: true, cci: null, description: "", icon: "", id: null });
 const usePaymentMethodStore = storePaymentMethod();
 const useStoreTotalRate = storePriceRate();
 const useStoreActivities = storeActivities();
@@ -137,8 +138,9 @@ const onValueSelectPayment = (id: number) => {
                             size="large" @value-change="(value) => onValueSelectPayment(value)"/>
                 </FormItem>
                 <FormItem cols="12" hide-error hide-label v-if="paymentmethod">
-                    <view-payment-methods :name-account="dataForViewPayment.description" :number-account="dataForViewPayment.account"
-                                          :img-account="dataForViewPayment.icon"/>
+                    <view-payment-methods :description="dataForViewPayment.description" :account="dataForViewPayment.account"
+                                          :icon="dataForViewPayment.icon" :cci="dataForViewPayment.cci" :id="dataForViewPayment.id"
+                                          :active="dataForViewPayment.active"/>
                 </FormItem>
                 <FormItem label="Voucher de pago" cols="12" :error="errors.voucherfile">
                     <FileUpload name="voucher" :accept="fileAccept" :max-file-size="1000000" :file-limit="1" class="w-full"
