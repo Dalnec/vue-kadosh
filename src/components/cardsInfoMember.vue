@@ -10,7 +10,6 @@ const props = withDefaults(defineProps<InterfaceMembers>(), {
     names: "",
     lastnames: "",
     gender: "",
-    birthdate: "",
     phone: "",
     kind: null,
     church: null,

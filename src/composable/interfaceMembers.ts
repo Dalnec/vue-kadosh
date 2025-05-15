@@ -1,7 +1,6 @@
 import type { InterfaceAxiosApiResponse } from "@/composable/InterfaceAxiosApiNoPaginate.ts";
 
 export interface InterfaceMembers {
-    birthdate: Date | string;
     church: number | null;
     doc_num: string;
     documenttype?: number | null;

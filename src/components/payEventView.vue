@@ -10,7 +10,6 @@ import { useField, useForm } from "vee-validate";
 import * as yup from "yup";
 import toastEvent from "@/composable/toastEvent.ts";
 import { fileToBase64 } from "@/composable/convertImageToUpload.ts";
-import { format, isDate, parseISO } from "date-fns";
 import { storeActivities, storePaymentMethod, storePriceRate, storeRate } from "@/stores/generalInfoStore.ts";
 import ViewPaymentMethods from "@/components/viewPaymentMethods.vue";
 import router from "@/router/routes.ts";
@@ -56,19 +55,13 @@ const saveAllMembers = handleSubmit(async() => {
     try {
 
         loadingSave.value = true;
-        const normalizedPeople = storeDataMembers.membersData.map(person => {
-            const raw = person.birthdate;
-            const date: Date = isDate(raw) ? raw as Date : parseISO(raw as string);
-            const formatted = format(date, "yyyy-MM-dd");
 
-            return { ...person, birthdate: formatted };
-        });
         const payload: Record<string, any> = {
             activity: 0,
             voucheramount: useStoreTotalRate.calculateRate(),
             tarifa: 0,
             paymentmethod: paymentmethod.value,
-            people: normalizedPeople
+            people: storeDataMembers.membersData
         };
         if (isVoucherImage(voucherfile.value)) payload.voucherfile = await fileToBase64(voucherfile.value.file);
 

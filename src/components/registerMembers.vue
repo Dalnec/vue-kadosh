@@ -6,7 +6,6 @@ import type { InterfaceMembers } from "@/composable/interfaceMembers.ts";
 import * as yup from "yup";
 import { useField, useForm } from "vee-validate";
 import toastEvent from "@/composable/toastEvent.ts";
-import { parseISO, isValid } from "date-fns";
 import FormItem from "@/components/formItem.vue";
 import DrawerMembersSaved from "@/components/drawerMembersSaved.vue";
 import { storeChurches, storeDocumentType, storeKind } from "@/stores/generalInfoStore.ts";
@@ -25,8 +24,7 @@ const props = defineProps({
 });
 
 const formMembers = ref<InterfaceMembers>({
-    birthdate: "", church: null, doc_num: "", documenttype: 1, gender: "", kind: null, lastnames: "", names: "", phone: "", status: true,
-    age: null
+    church: null, doc_num: "", documenttype: 1, gender: "", kind: null, lastnames: "", names: "", phone: "", status: true, age: null
 });
 
 const validationSchema = ref(yup.object({
@@ -98,8 +96,7 @@ const saveNewMember = handleSubmit(async(values) => {
 });
 
 const onClickCardMember = (data: InterfaceMembers) => {
-    const parsedDate = typeof data.birthdate === "string" ? parseISO(data.birthdate) : data.birthdate;
-    setValues({ ...data, birthdate: parsedDate && isValid(parsedDate) ? parsedDate : "" });
+    setValues({ ...data });
     isClickCard.value = true;
 };
 
@@ -156,18 +153,18 @@ watch(doc_num, () => {
                 </div>
             </div>
         </FormItem>
-<!--        <FormItem label="F. de Nacimiento" cols="6" :error="errors.gender">-->
-<!--            <DatePicker fluid v-model="birthdate" @blur="birthdateHandle(undefined, true)" :invalid="!!errors.birthdate" size="large"-->
-<!--                        date-format="d/m/yy"/>-->
-<!--        </FormItem>-->
+        <!--        <FormItem label="F. de Nacimiento" cols="6" :error="errors.gender">-->
+        <!--            <DatePicker fluid v-model="birthdate" @blur="birthdateHandle(undefined, true)" :invalid="!!errors.birthdate" size="large"-->
+        <!--                        date-format="d/m/yy"/>-->
+        <!--        </FormItem>-->
         <FormItem label="Edad" cols="12">
             <InputNumber fluid v-model="age" size="large"/>
         </FormItem>
-        <FormItem label="Celular" cols="12" :error="errors.birthdate">
+        <FormItem label="Celular" cols="12" :error="errors.phone">
             <InputText fluid v-model="phone" @blur="phoneHandle($event, true)" maxlength="9" v-key-filter.num :invalid="!!errors.phone"
                        size="large"/>
         </FormItem>
-        <FormItem label="¿Perteneces a alguna iglesia?" cols="12" :error="errors.phone">
+        <FormItem label="¿Perteneces a alguna iglesia?" cols="12" :error="errors.kind">
             <div class="flex flex-wrap items-center gap-4">
                 <div class="flex items-center gap-2" v-for="kindData in optionsKinds">
                     <RadioButton v-model="kind" :inputId="kindData.description" :name="kindData.description" :value="kindData.id"
@@ -177,7 +174,7 @@ watch(doc_num, () => {
                 </div>
             </div>
         </FormItem>
-        <FormItem label="Iglesia" cols="12" :error="errors.kind">
+        <FormItem label="Iglesia" cols="12" :error="errors.church">
             <Select :options="optionsChurches" fluid v-model="church" @blur="churchHandle($event, true)" filter show-clear size="large"
                     :invalid="!!errors.church" reset-filter-on-clear reset-filter-on-hide auto-filter-focus optionLabel="description"
                     option-value="id"/>
