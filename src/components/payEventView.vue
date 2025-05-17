@@ -2,7 +2,7 @@
 
 import { useMembersStore } from "@/stores/storeMembers.ts";
 import DrawerMembersSaved from "@/components/drawerMembersSaved.vue";
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { Api } from "@/api/connection.ts";
 import type { FileUploadSelectEvent } from "primevue";
 import FormItem from "@/components/formItem.vue";
@@ -41,6 +41,7 @@ const { handleSubmit, errors, resetForm } = useForm<{ voucherfile: VoucherImageT
 
 const { value: voucherfile, setValue: setVoucherImage } = useField<VoucherImageType | {}>("voucherfile");
 const { value: paymentmethod } = useField<number | null>("paymentmethod");
+const { value: tarifa, setValue: setRate } = useField<number | null>("tarifa");
 
 const setVoucherImageFile = (file: File | null) => {
     if (file) voucherfile.value = { file, objectURL: URL.createObjectURL(file) };
@@ -55,24 +56,16 @@ const saveAllMembers = handleSubmit(async() => {
     try {
 
         loadingSave.value = true;
+        const dataActivity = useStoreActivities.activities.find(act => act.is_active);
 
         const payload: Record<string, any> = {
-            activity: 0,
+            activity: dataActivity?.id,
             voucheramount: useStoreTotalRate.calculateRate(),
-            tarifa: 0,
+            tarifa: tarifa.value,
             paymentmethod: paymentmethod.value,
             people: storeDataMembers.membersData
         };
         if (isVoucherImage(voucherfile.value)) payload.voucherfile = await fileToBase64(voucherfile.value.file);
-
-        const dataRate = storeRate().rate.find(rt => rt.selected);
-        const dataActivity = useStoreActivities.activities.find(act => act.id === 1 && act.is_active);
-
-        if ( !dataRate) payload.tarifa = null;
-        else payload.tarifa = dataRate.id;
-
-        if ( !dataActivity) payload.activity = null;
-        else payload.activity = dataActivity.id;
 
         const { response } = await Api.Post({ route: "inscription-groups/register-group", data: payload });
 
@@ -105,6 +98,13 @@ const onValueSelectPayment = (id: number) => {
     if ( !found) return;
     dataForViewPayment.value = found;
 };
+
+onMounted(() => {
+    const dataRate = storeRate().rate.find(rt => rt.selected);
+    if (dataRate) {
+        setRate(dataRate?.id);
+    }
+});
 
 </script>
 
