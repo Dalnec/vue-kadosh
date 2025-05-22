@@ -1,22 +1,10 @@
 import toastEventBus from "primevue/toasteventbus";
 import axios, { AxiosError, type AxiosResponse } from "axios";
-import { type ErrorResponse } from "@/api/errorResponse";
 
 let baseURL: string = import.meta.env.VITE_API_APP_URL;
 let has_server_connection: boolean = true;
 
 const axiosInstance = axios.create({ baseURL });
-
-// axiosInstance.interceptors.request.use((conf: InternalAxiosRequestConfig) => {
-//     const store = useUserDataConfigStore();
-//     const token = store.userData.token;
-//     if (token) {
-//         conf.headers.authorization = `Bearer ${ token }`;
-//     } else {
-//         conf.headers.authorization = "";
-//     }
-//     return conf;
-// }, (error) => Promise.reject(error));
 
 axiosInstance.interceptors.response.use((conf: AxiosResponse): AxiosResponse => {
     has_server_connection = true;
@@ -51,38 +39,45 @@ async function handleServerError(errorData: unknown): Promise<void> {
 
     if (typeof errorData === "string") {
         showToast("error", errorData);
-    } else if (Array.isArray(errorData)) {
-        errorData.forEach((err) => showToast("error", String(err)));
-    } else if (typeof errorData === "object") {
+        return;
+    }
 
+    if (Array.isArray(errorData)) {
+        errorData.forEach((err) => showToast("error", String(err)));
+        return;
+    }
+
+    if (typeof errorData === "object") {
         const data = errorData as Record<string, any>;
-        if (data.errors && typeof data.errors === "object") {
-            Object.values(data.errors).forEach((messages) => {
-                if (Array.isArray(messages)) {
-                    messages.forEach((msg: ErrorResponse) => showToast("error", String(msg)));
-                } else {
-                    showToast("error", String(messages));
-                }
-            });
-        } else if (data.detail === "array") {
-            data.detail.forEach((msg: ErrorResponse) => {
-                showToast("error", String(msg.msg));
+
+        // Función recursiva para extraer errores
+        const extractMessages = (obj: any) => {
+            if (typeof obj === "string") {
+                showToast("error", obj);
+            } else if (Array.isArray(obj)) {
+                obj.forEach((item) => extractMessages(item));
+            } else if (typeof obj === "object" && obj !== null) {
+                Object.values(obj).forEach((val) => extractMessages(val));
+            }
+        };
+
+        if (data.errors) {
+            extractMessages(data.errors);
+        } else if (data.detail && Array.isArray(data.detail)) {
+            data.detail.forEach((msg: any) => {
+                showToast("error", typeof msg === "string" ? msg : String(msg?.msg || msg));
             });
         } else {
-            showToast("error", data.detail);
+            extractMessages(data);
         }
-    } else {
-        showToast("error", "Error desconocido.");
+        return;
     }
+
+    showToast("error", "Error desconocido.");
 }
 
 function showToast(severity: "success" | "info" | "warn" | "error", detail: string): void {
-    toastEventBus.emit("add", {
-        detail: detail,
-        life: 5000,
-        severity: severity,
-        summary: "Backend Error"
-    });
+    toastEventBus.emit("add", { detail: detail, life: 5000, severity: severity, summary: "Server Error" });
 }
 
 interface ApiProps<T> {
@@ -107,7 +102,7 @@ async function Post(props: ApiProps<any>): Promise<{ response: AxiosResponse }> 
         return { response };
     } catch (error) {
         console.log(error);
-        throw { error };
+        throw { response: null };
     }
 }
 
