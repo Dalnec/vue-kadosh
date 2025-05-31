@@ -64,6 +64,7 @@ const addDataFromReniec = async(): Promise<void> => {
 
     if ( !dataConsult || !dataConsult.success) {
         loadingSearch.value = false;
+        wasDniChecked.value = true;
         toastEvent({
             severity: "warn", summary: "DNI no encontrado", message: dataConsult?.message || "No se encontró información con ese DNI."
         });
