@@ -39,7 +39,4 @@ declare module 'vue' {
     Toast: typeof import('primevue/toast')['default']
     ViewPaymentMethods: typeof import('./src/components/viewPaymentMethods.vue')['default']
   }
-  export interface ComponentCustomProperties {
-    Tooltip: typeof import('primevue/tooltip')['default']
-  }
 }
