@@ -9,7 +9,7 @@ import toastEvent from "@/composable/toastEvent.ts";
 import FormItem from "@/components/formItem.vue";
 import DrawerMembersSaved from "@/components/drawerMembersSaved.vue";
 import { storeChurches, storeDocumentType, storeKind } from "@/stores/generalInfoStore.ts";
-import { type DataDNI, getDataReniec } from "@/composable/getDataReniec.ts";
+import { type DataDNI, getDataReniec, type MemberExist } from "@/composable/getDataReniec.ts";
 
 const refDrawerMembersSaved = ref();
 const loadingSearch = ref(false);
@@ -56,24 +56,40 @@ const optionsDocuments = computed(() => storeDocumentType().documentType);
 const optionsChurches = computed(() => storeChurches().churches);
 const optionsKinds = computed(() => storeKind().kind);
 
-const addDataFromReniec = async() => {
+const addDataFromReniec = async(): Promise<void> => {
     loadingSearch.value = true;
     wasDniChecked.value = false;
+
     const dataConsult = await getDataReniec(doc_num.value);
 
-    if ( !dataConsult) {
+    if ( !dataConsult || !dataConsult.success) {
         loadingSearch.value = false;
-        toastEvent({ severity: "warn", summary: "DNI no encontrado", message: "No se encontró información con ese DNI." });
+        wasDniChecked.value = true;
+        toastEvent({
+            severity: "warn", summary: "DNI no encontrado", message: dataConsult?.message || "No se encontró información con ese DNI."
+        });
         return;
     }
 
-    if ("nombre_completo" in dataConsult) {
-        const dataConsultDNI: DataDNI = dataConsult;
+    const result = dataConsult.data;
+
+    if ("doc_num" in result && "names" in result && "lastnames" in result) {
+        const dataConsultDNI = result as MemberExist;
+        // showMessage.value = true;
+        setValues({
+            names: dataConsultDNI.names, lastnames: `${ dataConsultDNI.lastnames }`, phone: dataConsultDNI.phone, kind: dataConsultDNI.kind,
+            gender: dataConsultDNI.gender, church: dataConsultDNI.church
+        }, false);
+        // infoMessage.value = { dni: result.doc_num, names: `${ result.names } ${ result.lastnames }` };
+    }
+
+    if ("nombre_completo" in result) {
+        const dataConsultDNI = result as DataDNI;
         setValues({
             names: dataConsultDNI.nombres, lastnames: `${ dataConsultDNI.apellido_paterno } ${ dataConsultDNI.apellido_materno }`
         }, false);
-        wasDniChecked.value = true;
     }
+
     wasDniChecked.value = true;
     loadingSearch.value = false;
 };

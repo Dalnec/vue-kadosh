@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import portTarapoto from "@/assets/images/portaidPicture.jpg";
-import camp1 from "@/assets/images/CAMP 25 - 01.png";
+import camp1 from "@/assets/images/CAMP 25 - 01.jpg";
 import camp2 from "@/assets/images/CAMP 25 - 02.png";
 
 const responsiveOptions = ref([
