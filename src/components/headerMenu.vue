@@ -43,7 +43,7 @@ const specialItem = { label: "Inscríbete", special: true };
             </router-link>
             <!-- Botón de menú móvil (visible solo en móviles) -->
             <button class="block p-2 md:hidden" @click="toggleMobileMenu" aria-label="Toggle menu">
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="h-6 w-6" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
             </button>
@@ -54,11 +54,11 @@ const specialItem = { label: "Inscríbete", special: true };
                         <a aria-description="items-header">{{ item.label }}</a>
                     </router-link>
                 </li>
-                <li aria-description="items-header" class="cursor-handle">
-                    <router-link to="/suscribe" class="flex items-center rounded bg-amber-500 px-4 py-2 text-xl font-bold uppercase">
+                <Button aria-description="items-header" disabled v-tooltip="'Inscripciones cerradas'">
+                    <router-link to="/suscribe" class="flex items-center rounded bg-amber-500 px-4 py-1 text-xl font-bold uppercase">
                         {{ specialItem.label }}
                     </router-link>
-                </li>
+                </Button>
             </ul>
         </nav>
         <!-- Menú móvil desplegable con transición (visible solo en móviles) -->
@@ -70,11 +70,11 @@ const specialItem = { label: "Inscríbete", special: true };
                             <a aria-description="items-header">{{ item.label }}</a>
                         </router-link>
                     </li>
-                    <li aria-description="items-header" class="cursor-handle">
-                        <router-link to="/suscribe" class="flex items-center rounded bg-amber-500 px-4 py-2 text-xl font-bold uppercase">
+                    <Button aria-description="items-header" disabled v-tooltip="'Inscripciones cerradas'">
+                        <router-link to="/suscribe" class="flex items-center rounded bg-amber-500 px-4 py-1 text-xl font-bold uppercase">
                             {{ specialItem.label }}
                         </router-link>
-                    </li>
+                    </Button>
                 </ul>
             </div>
         </transition>
