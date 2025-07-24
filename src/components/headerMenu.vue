@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
+import { useToast } from "primevue";
 
 const isScrolled = ref(false);
 const isMobileMenuOpen = ref(false);
 const w = globalThis as unknown as Window;
+const toast = useToast();
 
 const handleScroll = () => {
     isScrolled.value = w.scrollY > 50;
@@ -30,6 +32,10 @@ const menuItems = [
 
 const specialItem = { label: "Inscríbete", special: true };
 
+const onInscriptions = () => {
+    toast.add({ severity: "warn", life: 10000, summary: "Las Inscripciones por este medio están inactivas" });
+};
+
 </script>
 
 <template>
@@ -54,10 +60,10 @@ const specialItem = { label: "Inscríbete", special: true };
                         <a aria-description="items-header">{{ item.label }}</a>
                     </router-link>
                 </li>
-                <Button aria-description="items-header" disabled v-tooltip="'Inscripciones cerradas'">
-                    <router-link to="/suscribe" class="flex items-center rounded bg-amber-500 px-4 py-1 text-xl font-bold uppercase">
-                        {{ specialItem.label }}
-                    </router-link>
+                <Button @click="onInscriptions" class="bg-primary-emphasis" :label="specialItem.label" size="large">
+                    <!--                    <router-link to="/suscribe" class="flex items-center rounded bg-amber-500 px-4 py-1 text-xl font-bold uppercase">-->
+                    {{ specialItem.label }}
+                    <!--                    </router-link>-->
                 </Button>
             </ul>
         </nav>
@@ -70,10 +76,10 @@ const specialItem = { label: "Inscríbete", special: true };
                             <a aria-description="items-header">{{ item.label }}</a>
                         </router-link>
                     </li>
-                    <Button aria-description="items-header" disabled v-tooltip="'Inscripciones cerradas'">
-                        <router-link to="/suscribe" class="flex items-center rounded bg-amber-500 px-4 py-1 text-xl font-bold uppercase">
-                            {{ specialItem.label }}
-                        </router-link>
+                    <Button @click="onInscriptions" class="bg-primary-emphasis" :label="specialItem.label" size="large">
+                        <!--                        <router-link to="/suscribe" class="flex items-center rounded bg-amber-500 px-4 py-1 text-xl font-bold uppercase">-->
+                        {{ specialItem.label }}
+                        <!--                        </router-link>-->
                     </Button>
                 </ul>
             </div>

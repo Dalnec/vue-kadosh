@@ -7,11 +7,11 @@
 }
 
 .p-toast-message-icon {
-    @apply flex-shrink-0 text-lg w-[1.125rem] h-[1.125rem]
+    @apply flex-shrink-0 text-lg w-[1.135rem] h-[1.135rem]
 }
 
 .p-toast-message-content {
-    @apply flex items-start p-3 gap-2 break-all hyphens-auto
+    @apply flex items-start p-2 gap-2 hyphens-auto
 }
 
 .p-toast-message-text {
